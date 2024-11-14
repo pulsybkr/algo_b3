@@ -34,9 +34,29 @@ while ($running) {
     switch ($choice) {
         case 'Afficher les livres':
             $livres = afficherLivres($db);
-            $io->success('Livres disponibles :');
-            $io->writeln($livres);
-            $io->writeln("\nAppuyez sur Entrée pour continuer...");
+            $io->section('Liste des Livres');
+            
+            // Préparation des données pour le tableau
+            $tableHeaders = ['ID', 'Nom', 'Description', 'Statut'];
+            $tableRows = [];
+            
+            foreach ($livres as $livre) {
+                $status = $livre['disponible'] ? 
+                    '<fg=green>Disponible</>' : 
+                    '<fg=red>Indisponible</>';
+                
+                $tableRows[] = [
+                    $livre['id'],
+                    "<fg=yellow>{$livre['nom']}</>",
+                    $livre['description'],
+                    $status
+                ];
+            }
+            
+            // Affichage du tableau
+            $io->table($tableHeaders, $tableRows);
+            
+            $io->writeln("\n<fg=blue>Appuyez sur Entrée pour continuer...</>");
             readline();
             break;
 
