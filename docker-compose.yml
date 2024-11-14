@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./api:/var/www/html
+      - ./services:/var/www/html/services
+      - ./database:/var/www/html/database
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    networks:
+      - my_network
+
+  cli:
+    build:
+      context: .
+      dockerfile: cli/Dockerfile
+    volumes:
+      - .:/var/www/html
+    command: php /var/www/html/cli/cli.php
+    restart: "no"
+    networks:
+      - my_network
+    stdin_open: true
+    tty: true
+
+networks:
+  my_network:
+    driver: bridge
