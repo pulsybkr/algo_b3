@@ -16,7 +16,8 @@
         "phpunit/phpunit": "^9.0"
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "docker-setup": "composer install"
     },
     "minimum-stability": "stable",
     "prefer-stable": true

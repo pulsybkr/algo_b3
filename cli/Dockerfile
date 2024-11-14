@@ -20,8 +20,11 @@ RUN mkdir -p /var/www/html/services \
 
 WORKDIR /var/www/html
 
-# Script d'entrée pour installer les dépendances au démarrage
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Copier les fichiers de l'application
+COPY . .
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+# Installer les dépendances
+RUN composer install --no-dev --optimize-autoloader
+
+# Définir la commande par défaut
+# CMD ["php", "-a"]
