@@ -1,14 +1,20 @@
 <?php
 //  Function pour créer un livre
 function creerLivre($db, $nom, $description, $disponible) {
-    $stmt = $db->prepare("INSERT INTO livres (nom, description, disponible) VALUES (:nom, :description, :disponible)");
-    $stmt->bindParam(':nom', $nom);
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':disponible', $disponible);
-    $stmt->execute();
-    sauvegarderLivresDansJson($db); // Sauvegarde après création
-    enregistrerHistorique("Création du livre : $nom"); // Historique après action
-    return ["message" => "Création de livre réussie", "nom" => $nom];
+    try {
+        $stmt = $db->prepare("INSERT INTO livres (nom, description, disponible) VALUES (:nom, :description, :disponible)");
+        $stmt->bindParam(':nom', $nom);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':disponible', $disponible);
+        $stmt->execute();
+        
+        sauvegarderLivresDansJson($db); // Sauvegarde après création
+        enregistrerHistorique("Création du livre : $nom"); // Historique après action
+        
+        return ["message" => "Création de livre réussie", "nom" => $nom];
+    } catch (Exception $e) {
+        return ["message" => "Erreur lors de la création du livre: " . $e->getMessage()];
+    }
 }
 
 //  Function pour modifier un livre
@@ -164,7 +170,5 @@ function getLivres($db) {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-
-
 
 ?>
