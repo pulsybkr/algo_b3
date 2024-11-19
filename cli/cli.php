@@ -28,7 +28,12 @@ while ($running) {
     $choice = $io->choice('Choisissez une action', [
         1 => 'Afficher les livres',
         2 => 'Ajouter un livre',
-        3 => 'Quitter'
+        3 => 'Modifier un livre',
+        4 => 'Supprimer un livre',
+        5 => 'Trier les livres',
+        6 => 'Rechercher des livres',
+        7 => 'Historique des actions',
+        8 => 'Quitter'
     ], 1);
 
     switch ($choice) {
