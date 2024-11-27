@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1",
+        "nom": "article un",
+        "description": "les Hommes naissent et demeurrent libre et egaux en droit.",
+        "disponible": "0"
+    },
+    {
+        "id": "5",
+        "nom": "Livre de Daniella",
+        "description": "Ceci est un test",
+        "disponible": "0"
+    },
+    {
+        "id": "6",
+        "nom": "Livre test",
+        "description": "Test pour adapter le statut en fonction du choix de l'utilisateur",
+        "disponible": "0"
+    },
+    {
+        "id": "12",
+        "nom": "psg",
+        "description": "hier 27\/11\/2024\u001b[D\u001b[D\u001b[D ils ont encore perdu :( face au bayern",
+        "disponible": "0"
+    },
+    {
+        "id": "13",
+        "nom": "psg - bayern",
+        "description": "le psg a perdu ! nueur a plus reussi de drible que dembele ! c'est abuser! douche froide pour le fc brest qui a perdu 3 - 0 face a barcelone",
+        "disponible": "1"
+    },
+    {
+        "id": "14",
+        "nom": "modifi",
+        "description": "modification du livre",
+        "disponible": "1"
+    }
+]

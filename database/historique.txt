@@ -1,0 +1,14 @@
+2024-11-27 09:30:25 - Suppression du livre avec ID : 7
+2024-11-27 09:40:27 - Modification du livre avec ID : 2
+2024-11-27 09:40:44 - Modification du livre avec ID : 2
+2024-11-27 09:41:03 - Suppression du livre avec ID : 2
+2024-11-27 09:44:03 - Création du livre : psg
+2024-11-27 09:45:41 - Création du livre : psg - bayern
+2024-11-27 09:46:51 - Suppression du livre avec ID : 11
+2024-11-27 09:56:33 - Livres triés par nom
+2024-11-27 09:57:01 - Livres triés par description
+2024-11-27 10:26:30 - Création du livre : ajout
+2024-11-27 10:27:05 - Modification du livre avec ID : 14
+2024-11-27 10:35:54 - Modification du livre avec ID : 1
+2024-11-27 10:39:57 - Livres triés par nom
+2024-11-27 11:06:35 - Livres triés par nom

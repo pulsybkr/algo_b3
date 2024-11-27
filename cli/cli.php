@@ -159,8 +159,9 @@ while ($running) {
             break;
 
         case 'Historique des actions':
-            if (file_exists('historique.txt')) {
-                $historique = file_get_contents('historique.txt');
+            $historyFile = '/var/www/html/database/historique.txt';
+            if (file_exists($historyFile)) {
+                $historique = file_get_contents($historyFile);
                 $io->section('Historique des actions');
                 $io->writeln($historique);
             } else {

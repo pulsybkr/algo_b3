@@ -2,16 +2,31 @@
 //  Function pour créer un livre
 function creerLivre($db, $nom, $description, $disponible) {
     try {
+        // Vérifier si la table existe, sinon la créer
+        $db->exec("CREATE TABLE IF NOT EXISTS livres (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nom TEXT NOT NULL,
+            description TEXT NOT NULL,
+            disponible BOOLEAN NOT NULL
+        )");
+
         $stmt = $db->prepare("INSERT INTO livres (nom, description, disponible) VALUES (:nom, :description, :disponible)");
         $stmt->bindParam(':nom', $nom);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':disponible', $disponible);
         $stmt->execute();
         
-        sauvegarderLivresDansJson($db); // Sauvegarde après création
-        enregistrerHistorique("Création du livre : $nom"); // Historique après action
+        // Récupérer l'ID du livre créé
+        $id = $db->lastInsertId();
         
-        return ["message" => "Création de livre réussie", "nom" => $nom];
+        // Mettre à jour le fichier JSON avec les données actuelles
+        $livres = getLivres($db);
+        $json_data = json_encode($livres, JSON_PRETTY_PRINT);
+        file_put_contents('/var/www/html/database/livres.json', $json_data);
+        
+        enregistrerHistorique("Création du livre : $nom");
+        
+        return ["message" => "Création de livre réussie", "nom" => $nom, "id" => $id];
     } catch (Exception $e) {
         return ["message" => "Erreur lors de la création du livre: " . $e->getMessage()];
     }
@@ -42,20 +57,27 @@ function supprimerLivre($db, $id) {
 
 //  Funcion pour afficher des livres
 function afficherLivres($db) {
-    $livres = getLivres($db);
-    if (empty($livres)) {
-        return ["message" => "Aucun livre à afficher."];
+    try {
+        $stmt = $db->query("SELECT * FROM livres");
+        $livres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        if (empty($livres)) {
+            return ["message" => "Aucun livre à afficher."];
+        }
+        
+        $result = [];
+        foreach ($livres as $livre) {
+            $result[] = [
+                "id" => $livre['id'],
+                "nom" => $livre['nom'],
+                "description" => $livre['description'],
+                "disponible" => $livre['disponible'] ? 1 : "Indisponible"
+            ];
+        }
+        return $result;
+    } catch (Exception $e) {
+        return ["error" => "Erreur lors de la récupération des livres: " . $e->getMessage()];
     }
-    $result = [];
-    foreach ($livres as $livre) {
-        $result[] = [
-            "id" => $livre['id'],
-            "nom" => $livre['nom'],
-            "description" => $livre['description'],
-            "disponible" => $livre['disponible'] ? "Oui" : "Non"
-        ];
-    }
-    return $result;
 }
 
 //  Function pour afficher un livre
@@ -69,7 +91,7 @@ function afficherLivre($db, $id) {
             "id" => $livre['id'],
             "nom" => $livre['nom'],
             "description" => $livre['description'],
-            "disponible" => $livre['disponible'] ? "Oui" : "Non"
+            "disponible" => $livre['disponible'] ? 1 : 0
         ];
     } else {
         return ["message" => "Livre non trouvé."];
@@ -145,29 +167,34 @@ function rechercherLivre($db, $colonne, $valeur) {
 
 // Fonction pour sauvegarder les livres dans un fichier JSON
 function sauvegarderLivresDansJson($db) {
-    $livres = getLivres($db); // Récupérer les livres depuis la source (DB ou JSON)
-    $json_data = json_encode($livres, JSON_PRETTY_PRINT); // Encoder en JSON avec une mise en forme
-    file_put_contents('livres.json', $json_data); // Sauvegarder dans le fichier JSON
+    $livres = getLivres($db);
+    $json_data = json_encode($livres, JSON_PRETTY_PRINT);
+    file_put_contents('/var/www/html/database/livres.json', $json_data); // Chemin absolu vers database
 }
 
-// Fonction pour enregistrer l'historique des actions dans un fichier texte
+// Fonction pour enregistrer l'historique
 function enregistrerHistorique($action) {
-    $file = 'historique.txt';
-    $current = file_get_contents($file); // Charger l'historique existant
-    $current .= date('Y-m-d H:i:s') . " - " . $action . "\n"; // Ajouter la nouvelle action
-    file_put_contents($file, $current); // Sauvegarder l'historique dans le fichier
+    $file = '/var/www/html/database/historique.txt'; // Chemin absolu vers database
+    $current = file_exists($file) ? file_get_contents($file) : '';
+    $current .= date('Y-m-d H:i:s') . " - " . $action . "\n";
+    file_put_contents($file, $current);
 }
 
-// Fonction pour récupérer les livres (depuis la base de données ou JSON)
+// Fonction pour récupérer les livres
 function getLivres($db) {
-    if (file_exists('livres.json')) {
-        // Charger les livres depuis le fichier JSON si disponible
-        $json_data = file_get_contents('livres.json');
-        return json_decode($json_data, true);
-    } else {
-        // Charger les livres depuis la base de données si le fichier JSON n'existe pas
+    try {
+        // Vérifier si la table existe
+        $db->exec("CREATE TABLE IF NOT EXISTS livres (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nom TEXT NOT NULL,
+            description TEXT NOT NULL,
+            disponible BOOLEAN NOT NULL
+        )");
+
         $stmt = $db->query("SELECT * FROM livres");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        return [];
     }
 }
 

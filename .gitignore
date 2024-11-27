@@ -50,8 +50,5 @@
 
 # Embedded web-server pid file
 /.web-server-pid
-/front/node_modules
-/front/.next
-/front/package-lock.json
-/front/yarn.lock
+
 

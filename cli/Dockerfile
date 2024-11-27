@@ -28,3 +28,6 @@ RUN composer install --no-dev --optimize-autoloader
 
 # Définir la commande par défaut
 # CMD ["php", "-a"]
+
+RUN chown -R www-data:www-data /var/www/html/database
+RUN chmod -R 777 /var/www/html/database
