@@ -22,6 +22,7 @@ services:
       dockerfile: cli/Dockerfile
     volumes:
       - .:/var/www/html
+      - /var/www/html/vendor
     command: php /var/www/html/cli/cli.php
     restart: "no"
     networks:

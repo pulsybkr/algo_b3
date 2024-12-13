@@ -13,8 +13,8 @@
     },
     {
         "id": "14",
-        "nom": "modifi",
+        "nom": "modifier",
         "description": "modification du livre",
-        "disponible": "1"
+        "disponible": "0"
     }
 ]

@@ -14,20 +14,20 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* \
 # Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Créer les dossiers nécessaires
-RUN mkdir -p /var/www/html/services \
-    && mkdir -p /var/www/html/database
-
 WORKDIR /var/www/html
 
 # Copier les fichiers de l'application
 COPY . .
 
-# Installer les dépendances
-RUN composer install --no-dev --optimize-autoloader
+# Installer les dépendances avec Composer
+RUN cd /var/www/html && composer install --no-dev --optimize-autoloader
+
+# Vérifier que le dossier vendor existe
+RUN ls -la /var/www/html/vendor
 
 # Définir la commande par défaut
 # CMD ["php", "-a"]
 
 RUN chown -R www-data:www-data /var/www/html/database
 RUN chmod -R 777 /var/www/html/database
+RUN chown -R www-data:www-data /var/www/html/vendor

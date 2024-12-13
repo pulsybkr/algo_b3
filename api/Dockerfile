@@ -1,5 +1,8 @@
 FROM php:8.0-apache
 
+# Ajouter la configuration globale du ServerName
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Copier les fichiers de l'API
 COPY . /var/www/html/
 
