@@ -140,18 +140,27 @@ while ($running) {
             $valeur = $io->ask("Entrez la valeur à rechercher dans '$colonne'");
             $resultat = rechercherLivre($db, $colonne, $valeur);
             
-            if (isset($resultat['id'])) {
-                $io->section('Livre trouvé');
-                $io->table(['ID', 'Nom', 'Description', 'Statut'], [
-                    [
-                        $resultat['id'],
-                        $resultat['nom'],
-                        $resultat['description'],
-                        $resultat['disponible'] ? 'Disponible' : 'Indisponible'
-                    ]
-                ]);
+            if ($resultat['success']) {
+                $io->section('Livres trouvés');
+                $tableHeaders = ['ID', 'Nom', 'Description', 'Statut'];
+                $tableRows = [];
+                
+                foreach ($resultat['resultats'] as $livre) {
+                    $status = $livre['disponible'] ? 
+                        '<fg=green>Disponible</>' : 
+                        '<fg=red>Indisponible</>';
+                    
+                    $tableRows[] = [
+                        $livre['id'],
+                        "<fg=yellow>{$livre['nom']}</>",
+                        $livre['description'],
+                        $status
+                    ];
+                }
+                
+                $io->table($tableHeaders, $tableRows);
             } else {
-                $io->error('Livre non trouvé.');
+                $io->error($resultat['message']);
             }
             
             $io->writeln("\n<fg=blue>Appuyez sur Entrée pour continuer...</>");

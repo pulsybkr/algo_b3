@@ -140,30 +140,71 @@ function rechercheBinaire($livres, $key, $valeur) {
     $low = 0;
     $high = count($livres) - 1;
 
+    // Normaliser la valeur recherchée
+    $valeurRecherchee = strtolower(trim($valeur));
+
+    $resultats = [];
+
     while ($low <= $high) {
         $mid = floor(($low + $high) / 2);
-        if ($livres[$mid][$key] == $valeur) {
-            return $livres[$mid]; // Livre trouvé
-        } elseif ($livres[$mid][$key] < $valeur) {
+
+        // Normaliser la valeur courante pour comparaison
+        $valeurCourante = strtolower(trim($livres[$mid][$key] ?? ''));
+
+        if (strpos($valeurCourante, $valeurRecherchee) !== false) {
+            // Si correspondance trouvée, ajouter tous les éléments correspondants autour de l'indice médian
+            
+            // Chercher à gauche du milieu
+            for ($i = $mid; $i >= 0; $i--) {
+                $valeurTemp = strtolower(trim($livres[$i][$key] ?? ''));
+                if (strpos($valeurTemp, $valeurRecherchee) !== false) {
+                    $resultats[] = $livres[$i];
+                } else {
+                    break; // Arrêter si plus de correspondance
+                }
+            }
+
+            // Chercher à droite du milieu
+            for ($i = $mid + 1; $i < count($livres); $i++) {
+                $valeurTemp = strtolower(trim($livres[$i][$key] ?? ''));
+                if (strpos($valeurTemp, $valeurRecherchee) !== false) {
+                    $resultats[] = $livres[$i];
+                } else {
+                    break; // Arrêter si plus de correspondance
+                }
+            }
+
+            return $resultats; // Retourner tous les résultats trouvés
+        }
+
+        if ($valeurCourante < $valeurRecherchee) {
             $low = $mid + 1;
         } else {
             $high = $mid - 1;
         }
     }
-    return null; // Livre non trouvé
+
+    return []; // Aucun résultat trouvé
 }
 
 // Fonction pour rechercher un livre
 function rechercherLivre($db, $colonne, $valeur) {
     $livres = getLivres($db);
-    $sortedLivres = mergeSort($livres, $colonne); // Trier les livres
-    $resultat = rechercheBinaire($sortedLivres, $colonne, $valeur); // Recherche binaire
-    if ($resultat) {
-        return $resultat;
-    } else {
-        return ["message" => "Livre non trouvé avec $colonne : $valeur"];
+    $sortedLivres = mergeSort($livres, $colonne);
+    $resultats = rechercheBinaire($sortedLivres, $colonne, $valeur);
+    
+    if (!empty($resultats)) {
+        return [
+            "success" => true,
+            "resultats" => $resultats
+        ];
     }
+    return [
+        "success" => false,
+        "message" => "Aucun livre trouvé avec '$valeur' dans la colonne '$colonne'"
+    ];
 }
+
 
 // Fonction pour sauvegarder les livres dans un fichier JSON
 function sauvegarderLivresDansJson($db) {
