@@ -30,6 +30,20 @@ services:
     stdin_open: true
     tty: true
 
+  frontend:
+    build:
+      context: .
+      dockerfile: next/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./next:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - my_network
+
 networks:
   my_network:
     driver: bridge

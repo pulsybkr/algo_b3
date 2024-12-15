@@ -3,13 +3,13 @@
         "id": "1",
         "nom": "article un",
         "description": "les Hommes naissent et demeurrent libre et egaux en droit.",
-        "disponible": "0"
+        "disponible": "1"
     },
     {
         "id": "12",
         "nom": "psg",
-        "description": "hier 27\/11\/2024\u001b[D\u001b[D\u001b[D ils ont encore perdu :( face au bayern",
-        "disponible": "0"
+        "description": "hier 27\/11\/2024 ils ont encore perdu :( face au bayern",
+        "disponible": "Indisponible"
     },
     {
         "id": "14",
