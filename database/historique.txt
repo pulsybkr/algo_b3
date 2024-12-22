@@ -33,3 +33,67 @@
 2024-12-13 17:31:25 - Suppression du livre avec ID : 15
 2024-12-13 17:32:59 - Modification du livre avec ID : 1
 2024-12-13 17:33:29 - Modification du livre avec ID : 1
+2024-12-22 14:54:02 - Livres triés par description
+2024-12-22 14:54:04 - Livres triés par disponible
+2024-12-22 14:54:05 - Livres triés par nom
+2024-12-22 14:54:06 - Livres triés par description
+2024-12-22 14:54:34 - Modification du livre avec ID : 1
+2024-12-22 14:54:40 - Modification du livre avec ID : 1
+2024-12-22 14:55:47 - Modification du livre avec ID : 14
+2024-12-22 14:55:51 - Modification du livre avec ID : 14
+2024-12-22 14:56:30 - Livres triés par disponible
+2024-12-22 14:56:36 - Modification du livre avec ID : 1
+2024-12-22 14:58:26 - Modification du livre avec ID : 12
+2024-12-22 15:03:18 - Modification du livre avec ID : 1
+2024-12-22 15:08:53 - Modification du livre avec ID : 1
+2024-12-22 15:12:46 - Modification du livre avec ID : 1
+2024-12-22 15:14:18 - Modification du livre avec ID : 1
+2024-12-22 15:14:38 - Modification du livre avec ID : 14
+2024-12-22 15:48:36 - Livres triés par nom
+2024-12-22 15:48:38 - Livres triés par nom
+2024-12-22 15:48:56 - Livres triés par nom
+2024-12-22 15:49:58 - Livres triés par disponible
+2024-12-22 15:55:22 - Livres triés par nom
+2024-12-22 15:55:23 - Livres triés par nom
+2024-12-22 16:12:31 - Création du livre : aaaaaa
+2024-12-22 16:15:24 - Livres triés par nom
+2024-12-22 16:15:32 - Livres triés par nom
+2024-12-22 16:15:34 - Livres triés par nom
+2024-12-22 16:17:23 - Livres triés par nom
+2024-12-22 16:17:29 - Livres triés par nom
+2024-12-22 16:27:04 - Modification du livre avec ID : 1
+2024-12-22 16:27:07 - Modification du livre avec ID : 1
+2024-12-22 16:27:14 - Livres triés par disponible
+2024-12-22 20:00:17 - Suppression du livre avec ID : 14
+2024-12-22 20:05:55 - Livres triés par disponible
+2024-12-22 20:07:48 - Livres triés par nom
+2024-12-22 20:13:57 - Consultation du livre ID: 12 - psg
+2024-12-22 20:15:36 - Création du livre : Le Voyageur du Temps
+2024-12-22 20:15:50 - Création du livre : Les Ombres de la Nuit 
+2024-12-22 20:16:01 - Création du livre : La Clé des Rêves
+2024-12-22 20:16:14 - Création du livre : L'Énigme de la Pierre 
+2024-12-22 20:16:28 - Création du livre : Les Gardiens de l'Univers
+2024-12-22 20:16:40 - Création du livre : Le Dernier Héros
+2024-12-22 20:16:53 - Création du livre : Les Secrets de l'Atlantid
+2024-12-22 20:17:03 - Création du livre : La Malédiction du Pharaon
+2024-12-22 20:17:13 - Création du livre : Les Échos du Passé
+2024-12-22 20:17:24 - Création du livre : La Forêt des Illusions
+2024-12-22 20:17:35 - Création du livre : Le Labyrinthe des Âmes
+2024-12-22 20:17:44 - Création du livre : Les Voyageurs de l'Inconnu
+2024-12-22 20:17:51 - Création du livre : La Prophétie des Étoiles 
+2024-12-22 20:18:15 - Création du livre : Les Fantômes de la Mer
+2024-12-22 20:18:25 - Création du livre : Le Chant des Sirènes
+2024-12-22 20:18:34 - Création du livre : Les Enfants de la Lune 
+2024-12-22 20:18:43 - Création du livre : Le Dernier Magicien
+2024-12-22 20:19:01 - Création du livre : La Quête de l'Immortalité
+2024-12-22 20:19:13 - Création du livre : Les Rêves de l'Humanité
+2024-12-22 20:21:37 - Modification du livre avec ID : 30
+2024-12-22 20:21:52 - Consultation du livre ID: 30 - Les Enfants de la Lune 
+2024-12-22 20:22:54 - Création du livre : Le Mystère de la Chambre Jaune et Les Larmes du Dragon
+2024-12-22 20:23:36 - Suppression du livre avec ID : 33
+2024-12-22 20:23:49 - Livres triés par nom
+2024-12-22 20:24:22 - Suppression du livre avec ID : 1
+2024-12-22 20:24:34 - Livres triés par description
+2024-12-22 20:25:13 - Suppression du livre avec ID : 12
+2024-12-22 20:49:00 - Consultation du livre ID: 30 - Les Enfants de la Lune 
+2024-12-22 20:49:42 - Modification du livre avec ID : 25

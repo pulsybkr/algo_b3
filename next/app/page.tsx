@@ -30,10 +30,19 @@ export default function Home() {
     description: "",
     disponible: 1,
   });
+  const [history, setHistory] = useState<string>("");
+  const [showHistoryDialog, setShowHistoryDialog] = useState(false);
 
   const fetchBooks = async () => {
     const response = await fetch("http://localhost:8000/livres");
+    if (!response.ok) {
+      console.error("Erreur lors de la récupération des livres");
+      console.error(response);
+      return;
+    }
+    console.log(response);
     const data = await response.json();
+    console.log(data);
     setBooks(data);
   };
 
@@ -63,7 +72,7 @@ export default function Home() {
       body: JSON.stringify(newBook),
     });
     const data = await response.json();
-    if (data.status === "success") {
+    if (response.ok) {
       setShowAddDialog(false);
       setNewBook({ nom: "", description: "", disponible: 1 });
       fetchBooks();
@@ -80,7 +89,7 @@ export default function Home() {
       body: JSON.stringify(selectedBook),
     });
     const data = await response.json();
-    if (data.status === "success") {
+    if (response.ok) {
       setShowEditDialog(false);
       setSelectedBook(null);
       fetchBooks();
@@ -96,7 +105,7 @@ export default function Home() {
       body: JSON.stringify({ id }),
     });
     const data = await response.json();
-    if (data.status === "success") {
+    if (response.ok) {
       fetchBooks();
     }
   };
@@ -214,7 +223,8 @@ export default function Home() {
               <Button variant="outline" className="w-full" onClick={async () => {
                 const response = await fetch("http://localhost:8000/historique");
                 const data = await response.json();
-                // Handle history display
+                setHistory(data.historique);
+                setShowHistoryDialog(true);
               }}>
                 <History className="mr-2 h-4 w-4" />
                 Voir l&apos;historique
@@ -234,12 +244,12 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                   <span
                     className={`px-2 py-1 rounded-full text-xs ${
-                      book.disponible
+                      book.disponible == 1
                         ? "bg-green-100 text-green-800"
                         : "bg-red-100 text-red-800"
                     }`}
                   >
-                    {book.disponible ? "Disponible" : "Indisponible"}
+                    {book.disponible == 1 ? "Disponible" : "Indisponible"}
                   </span>
                   <div className="space-x-2">
                     <Button
@@ -293,7 +303,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center space-x-2">
                   <Switch
-                    checked={selectedBook.disponible === 1}
+                    checked={selectedBook.disponible == 1}
                     onCheckedChange={(checked) =>
                       setSelectedBook({
                         ...selectedBook,
@@ -308,6 +318,19 @@ export default function Home() {
                 </Button>
               </div>
             )}
+          </DialogContent>
+        </Dialog>
+
+        <Dialog open={showHistoryDialog} onOpenChange={setShowHistoryDialog}>
+          <DialogContent className="max-w-3xl max-h-[80vh]">
+            <DialogHeader>
+              <DialogTitle>Historique des opérations</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4 overflow-y-auto">
+              <pre className="whitespace-pre-wrap text-sm scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                {history}
+              </pre>
+            </div>
           </DialogContent>
         </Dialog>
       </div>

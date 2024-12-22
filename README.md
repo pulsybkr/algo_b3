@@ -1,136 +1,115 @@
 # Système de Gestion de Bibliothèque
-
-Ce projet est une application CLI (Command Line Interface) permettant de gérer une bibliothèque simple. Il est développé en PHP et utilise SQLite comme base de données.
-
-## Fonctionnalités
-
-- Affichage de la liste des livres
-- Ajout de nouveaux livres
-- Gestion de la disponibilité des livres
-
+Une application moderne de gestion de bibliothèque avec une architecture microservices, comprenant une API REST, une interface CLI et une interface utilisateur web.
+## Fonctionnalités Principales
+- ✨ Interface web moderne avec Next.js
+ 🚀 API REST avec PHP
+ 💻 Interface en ligne de commande
+ 📚 Gestion complète des livres (CRUD)
+ 🔍 Recherche avancée avec tri intelligent
+ 📝 Historique des actions
+ 💾 Sauvegarde automatique en JSON
 ## Prérequis
-
 - Docker
-- Docker Compose
+ Docker Compose
+## Architecture du Projet
 
-## Structure du Projet
-# Système de Gestion de Bibliothèque
 
-Ce projet est une application CLI (Command Line Interface) permettant de gérer une bibliothèque simple. Il est développé en PHP et utilise SQLite comme base de données.
-
-## Fonctionnalités
-
-- Affichage de la liste des livres
-- Ajout de nouveaux livres
-- Gestion de la disponibilité des livres
-
-## Prérequis
-
-- Docker
-- Docker Compose
-
-## Structure du Projet
-plaintext
+``` plaintext
 .
-├── cli/
-│ └── cli.php
-├── services/
-│ └── service.php
-├── database/
-│ └── database.db
-├── docker/
-│ └── Dockerfile
-├── docker-compose.yml
-└── README.md
+├── api/ # Service API REST
+├── cli/ # Interface en ligne de commande
+├── next/ # Interface utilisateur web (Next.js)
+├── services/ # Logique métier partagée
+├── database/ # Données persistantes
+└── docker-compose.yml
 
-## Configuration Docker
+```	
 
-### Dockerfile
-
-Créez un fichier `docker/Dockerfile` :
-dockerfile
-FROM php:8.2-cli
-RUN apt-get update && apt-get install -y \
-git \
-unzip \
-libsqlite3-dev
-RUN docker-php-ext-install pdo pdo_sqlite
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-WORKDIR /app
-### docker-compose.yml
-
-Créez un fichier `docker-compose.yml` à la racine du projet :
-yaml
-version: '3.8'
-services:
-app:
-build:
-context: .
-dockerfile: docker/Dockerfile
-volumes:
-.:/app
-working_dir: /app
-command: php cli/cli.php
 
 ## Installation
 
-1. Clonez le repository :
-
-2. Installez les dépendances avec Composer :
-
-bash
-docker-compose run --rm app composer install
-
-
-3. Construisez l'image Docker :
-bash
-docker-compose build
-
-
-## Lancement de l'Application
-
-Pour lancer l'application :
-
-bash
-docker-compose up
+1. Clonez le dépôt : 
+```bash
+git clone git@github.com:pulsybkr/algo_b3.git
+```
+2. Naviguez vers le répertoire du projet :
+```bash
+cd algo_b3
+```
+3. Construisez et démarrez les conteneurs Docker :
+```bash
+docker-compose up -d
+```
 
 
-## Utilisation
+## Services Disponibles
 
-Une fois l'application lancée, vous aurez accès à un menu interactif avec les options suivantes :
+### 1. Interface Web (Frontend)
+- URL: `http://localhost:3000`
+- Framework: Next.js
+- Fonctionnalités:
+  - Interface utilisateur moderne
+  - Gestion intuitive des livres
+  - Recherche en temps réel
 
-1. **Afficher les livres** : Liste tous les livres présents dans la base de données
-2. **Ajouter un livre** : Permet d'ajouter un nouveau livre avec :
-   - Nom du livre
-   - Description
-   - Statut de disponibilité
-3. **Quitter** : Ferme l'application
+### 2. API REST
+- URL: `http://localhost:8000`
+- Endpoints principaux:
+  - `GET /livres` - Liste tous les livres
+  - `POST /ajouter` - Crée un nouveau livre
+  - `PUT /modifier` - Modifie un livre
+  - `DELETE /supprimer` - Supprime un livre
+  - `GET /trier` - Trie les livres par colonne
+  - `GET /rechercher` - Recherche un livre par colonne et valeur
+  - `GET /historique` - Affiche l'historique des actions
 
-## Tests
+### 3. Interface CLI
+- Accès: `docker-compose run cli`
+- Commandes disponibles:
+  - 📖 Afficher les livres
+  - 👁️ Afficher un livre
+  - ➕ Ajouter un livre
+  - ✏️ Modifier un livre
+  - 🗑️ Supprimer un livre
+  - 🔄 Trier les livres
+  - 🔍 Rechercher des livres
+  - 📜 Historique des actions
+  - ❌ Quitter
 
-Pour exécuter les tests (si implémentés) :
-bash
-docker-compose run --rm app vendor/bin/phpunit
+## Fonctionnalités Avancées
 
+### Système de Tri
+- Tri fusion optimisé
+- Tri possible par différentes colonnes
+- Performance O(n log n)
 
-## Gestion de la Base de Données
+### Système de Recherche
+- Recherche binaire efficace
+- Recherche partielle supportée
+- Performance O(log n)
 
-La base de données SQLite est automatiquement créée au premier lancement de l'application dans le dossier `database/`. Elle contient une table `livres` avec les champs suivants :
-
-- id (INTEGER PRIMARY KEY AUTOINCREMENT)
-- nom (TEXT NOT NULL)
-- description (TEXT NOT NULL)
-- disponible (INTEGER NOT NULL)
+### Persistance des Données
+- Base de données SQLite
+- Sauvegarde JSON automatique
+- Historique des actions
 
 ## Développement
 
-Pour accéder au conteneur en mode développement :
+Pour accéder aux différents services en développement :
 
-bash
-docker-compose run --rm app bash
+#Interface CLI
+```bash
+docker-compose run cli
+```
 
-## Arrêt de l'Application
+#logs
+```bash
+docker-compose logs -f [service]
+```
 
-Pour arrêter l'application :
-bash
+
+## Arrêt des Services
+```bash
 docker-compose down
+```
+

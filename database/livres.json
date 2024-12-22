@@ -1,20 +1,116 @@
 [
     {
-        "id": "1",
-        "nom": "article un",
-        "description": "les Hommes naissent et demeurrent libre et egaux en droit.",
+        "id": "15",
+        "nom": "Le Voyageur du Temps",
+        "description": "Un r\u00e9cit captivant sur un homme qui d\u00e9couvre une machine \u00e0 voyager dans le temps.",
         "disponible": "1"
     },
     {
-        "id": "12",
-        "nom": "psg",
-        "description": "hier 27\/11\/2024 ils ont encore perdu :( face au bayern",
-        "disponible": "Indisponible"
+        "id": "16",
+        "nom": "Les Ombres de la Nuit ",
+        "description": "Un thriller psychologique sur un d\u00e9tective traquant un tueur en s\u00e9rie.",
+        "disponible": "1"
     },
     {
-        "id": "14",
-        "nom": "modifier",
-        "description": "modification du livre",
+        "id": "17",
+        "nom": "La Cl\u00e9 des R\u00eaves",
+        "description": "Une aventure fantastique o\u00f9 les r\u00eaves deviennent r\u00e9alit\u00e9.",
+        "disponible": "0"
+    },
+    {
+        "id": "18",
+        "nom": "L'\u00c9nigme de la Pierre ",
+        "description": "Un roman d'\u00e9nigme autour d'une pierre myst\u00e9rieuse aux pouvoirs magiques.",
+        "disponible": "1"
+    },
+    {
+        "id": "19",
+        "nom": "Les Gardiens de l'Univers",
+        "description": "Une \u00e9pop\u00e9e spatiale sur une \u00e9quipe de h\u00e9ros intergalactiques.",
+        "disponible": "0"
+    },
+    {
+        "id": "20",
+        "nom": "Le Dernier H\u00e9ros",
+        "description": "L'histoire d'un h\u00e9ros d\u00e9chu qui doit retrouver sa gloire perdue.",
+        "disponible": "0"
+    },
+    {
+        "id": "21",
+        "nom": "Les Secrets de l'Atlantid",
+        "description": "Une exploration des mythes et l\u00e9gendes de la civilisation perdue.",
+        "disponible": "0"
+    },
+    {
+        "id": "22",
+        "nom": "La Mal\u00e9diction du Pharaon",
+        "description": "La Mal\u00e9diction du Pharaon",
+        "disponible": "1"
+    },
+    {
+        "id": "23",
+        "nom": "Les \u00c9chos du Pass\u00e9",
+        "description": "Un drame familial qui explore les secrets d'une lign\u00e9e.",
+        "disponible": "1"
+    },
+    {
+        "id": "24",
+        "nom": "La For\u00eat des Illusions",
+        "description": "Un conte fantastique sur une for\u00eat enchant\u00e9e pleine de cr\u00e9atures magiques.",
+        "disponible": "0"
+    },
+    {
+        "id": "25",
+        "nom": "Le Labyrinthe des \u00c2mes",
+        "description": " Un thriller mystique sur un labyrinthe qui pi\u00e8ge les \u00e2mes perdues. Un thriller mystique sur un labyrinthe qui pi\u00e8ge les \u00e2mes perdues. Un thriller mystique sur un labyrinthe qui pi\u00e8ge les \u00e2mes perdues. Un thriller mystique sur un labyrinthe qui pi\u00e8ge les \u00e2mes perdues.",
+        "disponible": "0"
+    },
+    {
+        "id": "26",
+        "nom": "Les Voyageurs de l'Inconnu",
+        "description": "Une histoire d'exploration sur des mondes parall\u00e8les.",
+        "disponible": "1"
+    },
+    {
+        "id": "27",
+        "nom": "La Proph\u00e9tie des \u00c9toiles ",
+        "description": "Un r\u00e9cit \u00e9pique sur une proph\u00e9tie qui pourrait changer le destin de l'humanit\u00e9.",
+        "disponible": "1"
+    },
+    {
+        "id": "28",
+        "nom": "Les Fant\u00f4mes de la Mer",
+        "description": "Un roman d'aventure maritime avec des l\u00e9gendes de pirates.",
+        "disponible": "1"
+    },
+    {
+        "id": "29",
+        "nom": "Le Chant des Sir\u00e8nes",
+        "description": "Une romance tragique entre un marin et une sir\u00e8ne.",
+        "disponible": "1"
+    },
+    {
+        "id": "30",
+        "nom": "Les Enfants de la Lune ",
+        "description": "Une histoire de magie et de myst\u00e8re autour d'une communaut\u00e9 secr\u00e8te.",
+        "disponible": "0"
+    },
+    {
+        "id": "31",
+        "nom": "Le Dernier Magicien",
+        "description": "Un r\u00e9cit sur le dernier repr\u00e9sentant d'une lign\u00e9e de magiciens.",
+        "disponible": "1"
+    },
+    {
+        "id": "32",
+        "nom": "La Qu\u00eate de l'Immortalit\u00e9",
+        "description": "Un drame sur les choix qui fa\u00e7onnent nos vies.",
+        "disponible": "1"
+    },
+    {
+        "id": "34",
+        "nom": "Le Myst\u00e8re de la Chambre Jaune et Les Larmes du Dragon",
+        "description": "Un classique du roman policier avec une \u00e9nigme \u00e0 r\u00e9soudre. Une aventure \u00e9pique sur un royaume menac\u00e9 par un dragon.",
         "disponible": "0"
     }
 ]

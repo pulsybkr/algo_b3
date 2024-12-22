@@ -58,25 +58,27 @@ function supprimerLivre($db, $id) {
 //  Funcion pour afficher des livres
 function afficherLivres($db) {
     try {
+        // Vérifie si la table existe
+        $db->exec("CREATE TABLE IF NOT EXISTS livres (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nom TEXT NOT NULL,
+            description TEXT NOT NULL,
+            disponible BOOLEAN NOT NULL
+        )");
+
+        // Compte le nombre de livres
+        $count = $db->query("SELECT COUNT(*) FROM livres")->fetchColumn();
+        // error_log("Nombre de livres dans la base : " . $count);
+
         $stmt = $db->query("SELECT * FROM livres");
         $livres = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
-        if (empty($livres)) {
-            return ["message" => "Aucun livre à afficher."];
-        }
+        // error_log("Livres récupérés dans afficherLivres : " . print_r($livres, true));
         
-        $result = [];
-        foreach ($livres as $livre) {
-            $result[] = [
-                "id" => $livre['id'],
-                "nom" => $livre['nom'],
-                "description" => $livre['description'],
-                "disponible" => $livre['disponible'] ? 1 : "Indisponible"
-            ];
-        }
-        return $result;
+        return $livres;
     } catch (Exception $e) {
-        return ["error" => "Erreur lors de la récupération des livres: " . $e->getMessage()];
+        error_log("Erreur dans afficherLivres : " . $e->getMessage());
+        throw new Exception("Erreur lors de la récupération des livres: " . $e->getMessage());
     }
 }
 
@@ -135,87 +137,76 @@ function trierLivres($db, $colonne) {
     return $sortedLivres;
 }
 
-// Fonction pour rechercher un livre par une colonne spécifique (Recherche binaire)
-function rechercheBinaire($livres, $key, $valeur) {
-    $low = 0;
-    $high = count($livres) - 1;
-
-    // Normaliser la valeur recherchée
-    $valeurRecherchee = strtolower(trim($valeur));
-
-    $resultats = [];
-
-    while ($low <= $high) {
-        $mid = floor(($low + $high) / 2);
-
-        // Normaliser la valeur courante pour comparaison
-        $valeurCourante = strtolower(trim($livres[$mid][$key] ?? ''));
-
-        if (strpos($valeurCourante, $valeurRecherchee) !== false) {
-            // Si correspondance trouvée, ajouter tous les éléments correspondants autour de l'indice médian
-            
-            // Chercher à gauche du milieu
-            for ($i = $mid; $i >= 0; $i--) {
-                $valeurTemp = strtolower(trim($livres[$i][$key] ?? ''));
-                if (strpos($valeurTemp, $valeurRecherchee) !== false) {
-                    $resultats[] = $livres[$i];
-                } else {
-                    break; // Arrêter si plus de correspondance
-                }
+// Fonction utilitaire de recherche de chaîne (déplacée à l'extérieur)
+function contientChaine($texte, $recherche) {
+    $texte = strtolower(trim($texte));
+    $recherche = strtolower(trim($recherche));
+    
+    $longueurTexte = strlen($texte);
+    $longueurRecherche = strlen($recherche);
+    
+    if ($longueurRecherche > $longueurTexte) {
+        return false;
+    }
+    
+    for ($i = 0; $i <= $longueurTexte - $longueurRecherche; $i++) {
+        $correspond = true;
+        for ($j = 0; $j < $longueurRecherche; $j++) {
+            if ($texte[$i + $j] !== $recherche[$j]) {
+                $correspond = false;
+                break;
             }
-
-            // Chercher à droite du milieu
-            for ($i = $mid + 1; $i < count($livres); $i++) {
-                $valeurTemp = strtolower(trim($livres[$i][$key] ?? ''));
-                if (strpos($valeurTemp, $valeurRecherchee) !== false) {
-                    $resultats[] = $livres[$i];
-                } else {
-                    break; // Arrêter si plus de correspondance
-                }
-            }
-
-            return $resultats; // Retourner tous les résultats trouvés
         }
-
-        if ($valeurCourante < $valeurRecherchee) {
-            $low = $mid + 1;
-        } else {
-            $high = $mid - 1;
+        if ($correspond) {
+            return true;
         }
     }
-
-    return []; // Aucun résultat trouvé
+    return false;
 }
 
-// Fonction pour rechercher un livre
 function rechercherLivre($db, $colonne, $valeur) {
     $livres = getLivres($db);
     $sortedLivres = mergeSort($livres, $colonne);
-    $resultats = rechercheBinaire($sortedLivres, $colonne, $valeur);
+    $resultats = [];
+    
+    foreach ($sortedLivres as $livre) {
+        if (contientChaine($livre[$colonne], $valeur)) {
+            $resultats[] = $livre;
+        }
+    }
+    
+    $statsRecherche = [
+        "total_livres" => count($sortedLivres),
+        "resultats_trouves" => count($resultats),
+        "colonne_recherchee" => $colonne,
+        "valeur_recherchee" => $valeur
+    ];
     
     if (!empty($resultats)) {
         return [
             "success" => true,
-            "resultats" => $resultats
+            "resultats" => $resultats,
+            "stats" => $statsRecherche
         ];
     }
+    
     return [
         "success" => false,
-        "message" => "Aucun livre trouvé avec '$valeur' dans la colonne '$colonne'"
+        "message" => "Aucun livre trouvé avec '$valeur' dans la colonne '$colonne'",
+        "stats" => $statsRecherche
     ];
 }
-
 
 // Fonction pour sauvegarder les livres dans un fichier JSON
 function sauvegarderLivresDansJson($db) {
     $livres = getLivres($db);
     $json_data = json_encode($livres, JSON_PRETTY_PRINT);
-    file_put_contents('/var/www/html/database/livres.json', $json_data); // Chemin absolu vers database
+    file_put_contents('/var/www/html/database/livres.json', $json_data);
 }
 
 // Fonction pour enregistrer l'historique
 function enregistrerHistorique($action) {
-    $file = '/var/www/html/database/historique.txt'; // Chemin absolu vers database
+    $file = '/var/www/html/database/historique.txt';
     $current = file_exists($file) ? file_get_contents($file) : '';
     $current .= date('Y-m-d H:i:s') . " - " . $action . "\n";
     file_put_contents($file, $current);
@@ -237,6 +228,47 @@ function getLivres($db) {
     } catch (Exception $e) {
         return [];
     }
+}
+
+// Fonction de recherche binaire
+function rechercheBinaire($db, $colonne, $valeur) {
+    $tableau = getLivres($db);
+    $debut = 0;
+    $fin = count($tableau) - 1;
+
+    while ($debut <= $fin) {
+        $milieu = floor(($debut + $fin) / 2);
+        
+        $valeurCourante = (string)$tableau[$milieu][$colonne];
+        $valeurRecherchee = (string)$valeur;
+        
+        $comparaison = strcmp(strtolower($valeurCourante), strtolower($valeurRecherchee));
+
+        if ($comparaison === 0) {
+            return [
+                "success" => true,
+                "resultat" => $tableau[$milieu]
+            ];
+        }
+
+        if ($comparaison > 0) {
+            $fin = $milieu - 1;
+        } else {
+            $debut = $milieu + 1;
+        }
+    }
+
+    return [
+        "success" => false,
+        "message" => "Aucune correspondance exacte trouvée"
+    ];
+}
+
+// Fonction pour rechercher un livre par ID de manière efficace
+function rechercherLivreParId($db, $id) {
+    $livres = getLivres($db);
+    $livresTriesParId = mergeSort($livres, 'id');
+    return rechercheBinaire($livresTriesParId, 'id', $id);
 }
 
 ?>
